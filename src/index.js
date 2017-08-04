@@ -1,7 +1,7 @@
 const invariant = require('fbjs/lib/invariant');
 
 import { NativeModules, processColor } from 'react-native';
-const { RNWalletModule } = NativeModules;
+const { RNActionSheetModule } = NativeModules;
 
 type Content = { title?: string, message: string } | { title?: string, url: string };
 type Options = { dialogTitle?: string, excludeActivityTypes?: Array<string>, tintColor?: string };
@@ -55,7 +55,7 @@ class Share {
     );
 
     return new Promise((resolve, reject) => {
-      ActionSheetManager.showShareActionSheetWithOptions(
+      RNActionSheetModule.showShareActionSheetWithOptions(
         {...content, ...options, tintColor: processColor(options.tintColor)},
         (error) => reject(error),
         (success, activityType) => {
