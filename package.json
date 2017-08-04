@@ -1,0 +1,33 @@
+{
+  "name": "react-native-action-sheet-module",
+  "version": "0.0.1",
+  "description": "ReactNative RNActionSheet extended.",
+  "files": ["src", "ios"],
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ErikMediaMonks/react-native-action-sheet-module.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "native",
+    "apple",
+    "action-sheet"
+  ],
+  "author": "Erik Poort",
+  "license": "GNU General Public License v3.0",
+  "bugs": {
+    "url": "https://github.com/ErikMediaMonks/react-native-action-sheet-module/issues"
+  },
+  "homepage": "https://github.com/ErikMediaMonks/react-native-action-sheet-module#readme",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0-alpha.6",
+    "react-native": ">=0.46.0"
+  }
+}
