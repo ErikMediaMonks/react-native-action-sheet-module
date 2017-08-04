@@ -130,15 +130,31 @@ RCT_EXPORT_METHOD(showShareActionSheetWithOptions:(NSDictionary *)options
 	NSURL *URL = [RCTConvert NSURL:options[@"url"]];
 	if (URL) {
 		if ([URL.scheme.lowercaseString isEqualToString:@"data"]) {
-			NSError *error;
-			NSString *base64 = [URL.absoluteString substringFromIndex:22];
-			NSData *data = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
-			if (!data) {
-				failureCallback(error);
-				return;
+			BOOL dataFallback = YES;
+			NSString *resourceSpecifier = URL.resourceSpecifier;
+			if ([resourceSpecifier rangeOfString:@"image"].location != NSNotFound &&
+				[resourceSpecifier rangeOfString:@"base64"].location != NSNotFound) {
+				NSUInteger commaIndex = [resourceSpecifier rangeOfString:@","].location;
+				if (commaIndex < resourceSpecifier.length) {
+					NSString *base64 = [resourceSpecifier substringFromIndex:commaIndex];
+					NSData *imageData = [[NSData alloc] initWithBase64EncodedString:base64 options:NSDataBase64DecodingIgnoreUnknownCharacters];
+					UIImage *image = [UIImage imageWithData:imageData];
+					if (image) {
+						[items addObject:image];
+						dataFallback = NO;
+					}
+				}
 			}
-			UIImage *image = [UIImage imageWithData:data];
-			[items addObject:image];
+
+			if (dataFallback) {
+				NSError *error;
+				NSData *data = [NSData dataWithContentsOfURL:URL options:(NSDataReadingOptions)0 error:&error];
+				if (!data) {
+					failureCallback(error);
+					return;
+				}
+				[items addObject:data];
+			}
 		} else {
 			[items addObject:URL];
 		}
