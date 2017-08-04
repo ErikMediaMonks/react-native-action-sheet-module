@@ -1,6 +1,6 @@
 {
   "name": "react-native-action-sheet-module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "ReactNative RNActionSheet extended.",
   "files": ["src", "ios"],
   "main": "src/index.js",
